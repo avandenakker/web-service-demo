@@ -15,6 +15,9 @@ public class DemoObject {
 	@Column(name="id")
 	private Long id;
 	
+	protected DemoObject() {
+	}
+	
 	public DemoObject(String name, Long id, String description) {
 		super();
 		this.name = name;
