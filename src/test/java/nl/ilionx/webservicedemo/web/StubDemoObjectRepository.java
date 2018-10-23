@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -19,7 +20,14 @@ public class StubDemoObjectRepository implements DemoObjectRepository {
 	public StubDemoObjectRepository() {
 		demoObjects.add(new DemoObject("Amsterdam", 1L, "This is a demo object"));
 		demoObjects.add(new DemoObject("Eindhoven", 2L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Utrecht", 3L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Helmond", 3L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Den Bosch", 4L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Rosmalen", 5L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Amersfoort", 6L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Zwolle", 7L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Maastricht", 8L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Den Haag", 9L, "This is a demo object"));
+		demoObjects.add(new DemoObject("Nuenen", 10L, "This is a demo object"));
 	}
 
 	@Override
@@ -30,8 +38,7 @@ public class StubDemoObjectRepository implements DemoObjectRepository {
 
 	@Override
 	public Page<DemoObject> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return new PageImpl<DemoObject>(demoObjects, pageable, demoObjects.size());
 	}
 
 	@Override
