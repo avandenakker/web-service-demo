@@ -9,10 +9,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import nl.ilionx.webservicedemo.config.DemoConfig;
 import nl.ilionx.webservicedemo.internal.DemoObject;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,8 +33,9 @@ public class DemoObjectControllerTest {
 
 	@Test
 	public void testDemoObjectsSummary() {
-		List<DemoObject> demoObjects = controller.demoObjectsSummary();
+		Page<DemoObject> demoObjects = controller.demoObjectsSummary(PageRequest.of(0, 5));
 		assertNotNull(demoObjects);
+		assertEquals(demoObjects.getContent().get(0).getName(), ("Amsterdam"));
 	}
 
 }
