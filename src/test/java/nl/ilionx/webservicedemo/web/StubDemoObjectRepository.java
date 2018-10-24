@@ -18,16 +18,16 @@ public class StubDemoObjectRepository implements DemoObjectRepository {
 	private List<DemoObject> demoObjects = new ArrayList<DemoObject>();
 
 	public StubDemoObjectRepository() {
-		demoObjects.add(new DemoObject("Amsterdam", 1L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Eindhoven", 2L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Helmond", 3L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Den Bosch", 4L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Rosmalen", 5L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Amersfoort", 6L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Zwolle", 7L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Maastricht", 8L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Den Haag", 9L, "This is a demo object"));
-		demoObjects.add(new DemoObject("Nuenen", 10L, "This is a demo object"));
+		demoObjects.add(new DemoObject(1L, "Amsterdam", "This is a demo object"));
+		demoObjects.add(new DemoObject(2L, "Eindhoven", "This is a demo object"));
+		demoObjects.add(new DemoObject(3L, "Helmond", "This is a demo object"));
+		demoObjects.add(new DemoObject(4L, "Den Bosch", "This is a demo object"));
+		demoObjects.add(new DemoObject(5L, "Rosmalen", "This is a demo object"));
+		demoObjects.add(new DemoObject(6L, "Amersfoort", "This is a demo object"));
+		demoObjects.add(new DemoObject(7L, "Zwolle", "This is a demo object"));
+		demoObjects.add(new DemoObject(8L, "Maastricht", "This is a demo object"));
+		demoObjects.add(new DemoObject(9L, "Den Haag", "This is a demo object"));
+		demoObjects.add(new DemoObject(10L, "Nuenen", "This is a demo object"));
 	}
 
 	@Override
