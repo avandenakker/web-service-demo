@@ -2,6 +2,8 @@ package nl.ilionx.webservicedemo.internal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,15 +15,22 @@ public class DemoObject {
 	
 	@Id
 	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	protected DemoObject() {
 	}
 	
-	public DemoObject(String name, Long id, String description) {
+	public DemoObject(Long id, String name, String description) {
 		super();
 		this.name = name;
 		this.id = id;
+		this.description = description;
+	}
+	
+	public DemoObject(String name, String description) {
+		super();
+		this.name = name;
 		this.description = description;
 	}
 
