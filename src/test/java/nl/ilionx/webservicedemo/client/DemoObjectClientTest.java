@@ -16,12 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import nl.ilionx.webservicedemo.internal.DemoObject;
+import nl.ilionx.webservicedemo.internal.DemoObjectNotFoundException;
 import nl.ilionx.webservicedemo.util.RestPageImpl;
+import nl.ilionx.webservicedemo.web.exception.ErrorDetails;
 
 
 @RunWith(SpringRunner.class)
@@ -31,6 +34,7 @@ public class DemoObjectClientTest {
 	private static final String BASE_URL_FOR_OBJECTS = "http://localhost:8080/objects";
 	
 	private RestTemplate restTemplate = new RestTemplate();
+
 	
 	@Test
 	public void listDemoObjectsFirstPageIsRetrieved() {
@@ -46,6 +50,26 @@ public class DemoObjectClientTest {
 		assertNotNull(page);
 		assertEquals("Eindhoven", page.getContent().get(0).getName());
 		assertEquals(1, page.getSize());
+	}
+	
+	@Test
+	public void getExistingObjectDetails() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", "1");
+		DemoObject demoObject =  restTemplate.getForObject(BASE_URL_FOR_OBJECTS+"/{id}", DemoObject.class, params);
+		assertEquals("Amsterdam",demoObject.getName());
+	}
+	
+	@Test
+	public void getNotExistingObjectDetails() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", "500");
+		try {
+		    restTemplate.getForEntity(BASE_URL_FOR_OBJECTS+"/{id}", ResponseEntity.class, params);
+			fail("Should have received 404 Not Found");
+		} catch(HttpClientErrorException e) {
+			assertEquals(HttpStatus.NOT_FOUND, e.getStatusCode());
+		}
 	}
 	
 	@Test
