@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import nl.ilionx.webservicedemo.internal.DemoObject;
-import nl.ilionx.webservicedemo.internal.DemoObjectRepository;
+import nl.ilionx.webservicedemo.model.DemoObject;
+import nl.ilionx.webservicedemo.repository.DemoObjectRepository;
 
 
 public class StubDemoObjectRepository implements DemoObjectRepository {
