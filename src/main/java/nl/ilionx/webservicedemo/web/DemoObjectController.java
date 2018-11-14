@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import nl.ilionx.webservicedemo.internal.DemoObject;
-import nl.ilionx.webservicedemo.internal.DemoObjectNotFoundException;
-import nl.ilionx.webservicedemo.internal.DemoObjectRepository;
+import nl.ilionx.webservicedemo.model.DemoObject;
+import nl.ilionx.webservicedemo.repository.DemoObjectRepository;
+import nl.ilionx.webservicedemo.web.exception.DemoObjectNotFoundException;
 
 @RestController
 @RequestMapping("/objects")

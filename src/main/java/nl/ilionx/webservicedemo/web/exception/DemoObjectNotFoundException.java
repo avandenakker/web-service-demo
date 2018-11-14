@@ -1,4 +1,4 @@
-package nl.ilionx.webservicedemo.internal;
+package nl.ilionx.webservicedemo.web.exception;
 
 public class DemoObjectNotFoundException extends RuntimeException {
 

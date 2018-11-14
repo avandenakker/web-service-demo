@@ -18,8 +18,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import nl.ilionx.webservicedemo.internal.DemoObjectNotFoundException;
-
 @RestControllerAdvice
 public class CustomizedResponseEntityExceptionHandler {
 

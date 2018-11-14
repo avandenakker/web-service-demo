@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import nl.ilionx.webservicedemo.internal.DemoObject;
+import nl.ilionx.webservicedemo.model.DemoObject;
 
 public class RestPageImpl extends PageImpl<DemoObject> {
 

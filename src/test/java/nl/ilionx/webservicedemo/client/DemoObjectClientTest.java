@@ -2,29 +2,28 @@ package nl.ilionx.webservicedemo.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import nl.ilionx.webservicedemo.internal.DemoObject;
-import nl.ilionx.webservicedemo.internal.DemoObjectNotFoundException;
+import nl.ilionx.webservicedemo.model.DemoObject;
 import nl.ilionx.webservicedemo.util.RestPageImpl;
-import nl.ilionx.webservicedemo.web.exception.ErrorDetails;
+
 
 
 @RunWith(SpringRunner.class)
@@ -33,7 +32,23 @@ public class DemoObjectClientTest {
 	
 	private static final String BASE_URL_FOR_OBJECTS = "http://localhost:8080/objects";
 	
-	private RestTemplate restTemplate = new RestTemplate();
+	private static final String AUTHENTICATION_URL = "http://localhost:8080/oauth/token";
+	
+	private RestTemplate restTemplate;
+	
+	@Before
+	public void getRestTemplate() {
+		ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
+		resourceDetails.setUsername("annavdakker");
+		resourceDetails.setPassword("password");
+		resourceDetails.setAccessTokenUri(AUTHENTICATION_URL);
+		resourceDetails.setClientId("webservicedemo");
+		resourceDetails.setClientSecret("secret");
+		resourceDetails.setGrantType("password");
+		resourceDetails.setScope(Arrays.asList("read", "write"));
+		resourceDetails.setId("oauth2-resource");
+		restTemplate = new OAuth2RestTemplate(resourceDetails, new DefaultOAuth2ClientContext());
+	}
 
 	
 	@Test
@@ -46,11 +61,12 @@ public class DemoObjectClientTest {
 		
 	@Test
 	public void listDemoObjectsSecondPageIsRetrieved() {
-		RestPageImpl page = restTemplate.getForObject(BASE_URL_FOR_OBJECTS + "?page=1&size=1", RestPageImpl.class);
+		RestPageImpl page =restTemplate .getForObject(BASE_URL_FOR_OBJECTS + "?page=1&size=1", RestPageImpl.class);
 		assertNotNull(page);
 		assertEquals("Eindhoven", page.getContent().get(0).getName());
 		assertEquals(1, page.getSize());
 	}
+	
 	
 	@Test
 	public void getExistingObjectDetails() {

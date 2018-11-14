@@ -1,4 +1,4 @@
-package nl.ilionx.webservicedemo.internal;
+package nl.ilionx.webservicedemo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

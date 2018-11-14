@@ -16,7 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import nl.ilionx.webservicedemo.config.DemoConfig;
-import nl.ilionx.webservicedemo.internal.DemoObject;
+import nl.ilionx.webservicedemo.model.DemoObject;
 
 
 @RunWith(SpringRunner.class)
