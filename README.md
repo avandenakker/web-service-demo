@@ -19,7 +19,7 @@ curl -i -H "Accept: application/json" -H "Authorization: Bearer $access_token" -
 ```
 ### Get demo object by id
 ```
-curl -i -H "Accept: application/json" -H "Authorization: Bearer $access_token" -X GET http://localhost:8080/objects/1
+curl -i -H "Accept: application/json" -H "Authorization: Bearer $access_token" -X GET http://localhost:8080/objects/{id}
 ```
 ### Create demo object (Windows command)
 ```
