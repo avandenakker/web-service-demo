@@ -1,20 +1,29 @@
-package nl.ilionx.webservicedemo.model;
+package nl.ilionx.webservicedemo.model.security;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name = "USERS")
+@Table(name = "USER_")
 public class User implements UserDetails {
 	
 	static final long serialVersionUID = 1L;
@@ -32,11 +41,16 @@ public class User implements UserDetails {
 	
 	@Column(name = "ENABLED", nullable = false)
 	private boolean enabled;
+	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "USERS_AUTHORITIES", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
+    @OrderBy
+    @JsonIgnore
+    private Collection<Authority> authorities;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
+		System.out.println(authorities);
 		return authorities;
 	}
 

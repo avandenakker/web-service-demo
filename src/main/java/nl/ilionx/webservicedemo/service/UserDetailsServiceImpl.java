@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import nl.ilionx.webservicedemo.repository.UserRepository;
 
 @Service("userDetailsService")
-public class UserService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	public UserRepository userRepository;
@@ -24,9 +24,7 @@ public class UserService implements UserDetailsService {
 		if(userDetails == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return User.withUsername(userDetails.getUsername())
-				.password(userDetails.getPassword())
-				.roles("USER").build(); 
+		return User.withUserDetails(userDetails).build();
 	}
 		
 }

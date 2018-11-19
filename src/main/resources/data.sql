@@ -1,10 +1,24 @@
-insert into  USERS (user_id, username, password, enabled) values 
-    ('1', 'annavdakker', '{bcrypt}$2a$10$.0UJ2fozO5TxNr7sFSWLQ.CurpCsvlvAoxIyyFifV.7j/wWCrKaLW', true),
-    ('2', 'lisavandenakker', '{bcrypt}$2a$10$D4OLKI6yy68crm.3imC9X.P2xqKHs5TloWUcr6z5XdOqnTrAK84ri', true),
-    ('3', 'stefanvandenakker', '{bcrypt}$2a$10$D4OLKI6yy68crm.3imC9X.P2xqKHs5TloWUcr6z5XdOqnTrAK84ri', true);
+INSERT INTO  USER_ (USER_ID, USERNAME, PASSWORD, ENABLED) VALUES 
+    (1, 'annavdakker', /**password**/'{bcrypt}$2a$10$.0UJ2fozO5TxNr7sFSWLQ.CurpCsvlvAoxIyyFifV.7j/wWCrKaLW', true),
+    (2, 'lisavandenakker', /**password**/'{bcrypt}$2a$10$D4OLKI6yy68crm.3imC9X.P2xqKHs5TloWUcr6z5XdOqnTrAK84ri', true),
+    (3, 'stefanvandenakker', /**password**/'{bcrypt}$2a$10$D4OLKI6yy68crm.3imC9X.P2xqKHs5TloWUcr6z5XdOqnTrAK84ri', true);
     
+INSERT INTO AUTHORITY(ID, NAME) VALUES (1, 'OBJECT_READ');
+INSERT INTO AUTHORITY(ID, NAME) VALUES (2, 'OBJECT_CREATE');
+INSERT INTO AUTHORITY(ID, NAME) VALUES (3, 'OBJECT_UPDATE');
+INSERT INTO AUTHORITY(ID, NAME) VALUES (4, 'OBJECT_DELETE');
+
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 1);
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 2);
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 3);
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (1, 4);
+
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (2, 2);
+
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (3, 2);
+INSERT INTO USERS_AUTHORITIES(USER_ID, AUTHORITY_ID) VALUES (3, 3);
     
-insert into T_DEMO_OBJECT (NAME, DESCRIPTION) values ('Amsterdam', 'Demo object description1');
-insert into T_DEMO_OBJECT (NAME, DESCRIPTION) values ('Eindhoven', 'Demo object description1');
+INSERT INTO T_DEMO_OBJECT (NAME, DESCRIPTION) VALUES ('Amsterdam', 'Demo object description1');
+INSERT INTO T_DEMO_OBJECT (NAME, DESCRIPTION) VALUES ('Eindhoven', 'Demo object description1');
 
 
