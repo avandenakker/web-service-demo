@@ -55,8 +55,9 @@ public class DemoObjectController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<DemoObject> updateDemoObject(@RequestBody DemoObject demoObject) {
+	public ResponseEntity<DemoObject> updateDemoObject(@RequestBody DemoObject demoObject, @PathVariable Long id) {
 		LOGGER.debug("updateDemoObject");
+		demoObject.setId(id);
 		return new ResponseEntity<DemoObject>(service.update(demoObject), HttpStatus.OK);
 	}
 	
