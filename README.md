@@ -21,11 +21,11 @@ curl -i -H "Accept: application/json" -H "Authorization: Bearer $access_token" -
 ```
 curl -i -H "Accept: application/json" -H "Authorization: Bearer $access_token" -X GET http://localhost:8080/objects/1
 ```
-### Create demo object
+### Create demo object (Windows command)
 ```
 curl -i -H "Content-Type: application/json" -H "Authorization: Bearer $access_token" -d "{\"name\": \"Den Bosch\", \"description\": \"This is a test description.\"}" POST http://localhost:8080/objects/
 ```
-### Update demo object
+### Update demo object (Windows command)
 ```
 curl -i -H "Content-Type: application/json" -H "Authorization: Bearer $access_token" -d "{\"name\": \"Den Bosch\", \"description\": \"This is an updated test description.\"}" -X PUT http://localhost:8080/objects/{id}
 ```
