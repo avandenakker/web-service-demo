@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
@@ -51,10 +52,49 @@ public class DemoObjectSecurityTests {
 
 	@Test
 	@WithMockUser(value = "annavdakker", authorities = "OBJECT_READ")
-	public void getMessageUnauthenticated() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	public void testFindAllObjectswithAuthorities_OBJECT_READ() {
 		Page<DemoObject> page = demoObjectService.findAll(PageRequest.of(0, 5));
 		assertEquals("Amsterdam", page.getContent().get(0).getName());
+	}
+	
+	@Test(expected = AuthenticationCredentialsNotFoundException.class)
+	public void testFindAllObjectswithNoAuthorities() {
+	    demoObjectService.findAll(PageRequest.of(0, 5));
+	}
+	
+	@Test(expected = AccessDeniedException.class)
+	@WithMockUser(value = "lisavandenakker", authorities = "OBJECT_CREATE")
+	public void testFindAllObjectswithAuthorities_OBJECT_CREATE() {
+	    demoObjectService.findAll(PageRequest.of(0, 5));
+	}
+	
+	@Test
+	@WithMockUser(value = "lisavandenakker", authorities = "OBJECT_CREATE")
+	public void testCreateObjectwithAuthorities_OBJECT_CREATE() {
+	    demoObjectService.create(new DemoObject(7L, "Zwolle", "This is a demo object"));
+	}
+	
+	@Test(expected = AccessDeniedException.class)
+	@WithMockUser(value = "lisavandenakker", authorities = "OBJECT_CREATE")
+	public void testDeleteObjectwithAuthorities_OBJECT_CREATE() {
+	    demoObjectService.delete(1L);
+	}
+	
+	@WithMockUser(value = "stefanvandenakker", authorities = {"OBJECT_UPDATE", "OBJECT_DELETE"})
+	public void testDeleteObjectwithAuthorities_OBJECT_UPDATE_DELETE() {
+	    demoObjectService.delete(1L);
+	}
+	
+	@Test(expected = AccessDeniedException.class)
+	@WithMockUser(value = "stefanvandenakker", authorities = {"OBJECT_UPDATE", "OBJECT_DELETE"})
+	public void testCreateObjectwithAuthorities_OBJECT_UPDATE_DELETE() {
+		 demoObjectService.create(new DemoObject(7L, "Zwolle", "This is a demo object"));
+	}
+	
+	@WithMockUser(value = "stefanvandenakker", authorities = { "OBJECT_UPDATE", "OBJECT_DELETE" })
+	public void testUpdateObjectwithAuthorities_OBJECT_UPDATE_DELETE() {
+		DemoObject demoObject = new DemoObject(1L, "Zwolle", "This is a demo object");
+		demoObjectService.update(demoObject);
 	}
 	
 	@Configuration
