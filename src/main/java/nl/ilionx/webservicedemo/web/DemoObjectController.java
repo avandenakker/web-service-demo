@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nl.ilionx.webservicedemo.model.DemoObject;
 import nl.ilionx.webservicedemo.repository.DemoObjectRepository;
+import nl.ilionx.webservicedemo.service.DemoObjectService;
 import nl.ilionx.webservicedemo.web.exception.DemoObjectNotFoundException;
 
 @RestController
@@ -29,21 +31,17 @@ public class DemoObjectController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DemoObjectController.class);
 	
-	public DemoObjectController(DemoObjectRepository repository) {
-		this.repository = repository;
-	}
-
 	@Autowired
-	private DemoObjectRepository repository;
+	private DemoObjectService service;
 	
 	@GetMapping()
 	public Page<DemoObject> demoObjectsSummary(Pageable pageable) {
-		return (Page<DemoObject>) repository.findAll(pageable);
+		return (Page<DemoObject>) service.findAll(pageable);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<DemoObject> demoObjectDetails(@PathVariable long id) {
-		Optional<DemoObject> demoObject = repository.findById(id);
+		Optional<DemoObject> demoObject = service.get(id);
 		if (!demoObject.isPresent()) {
 			throw new DemoObjectNotFoundException("id = " + id);
 		}
@@ -53,18 +51,18 @@ public class DemoObjectController {
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	public DemoObject createDemoObject(@RequestBody DemoObject demoObject) {
-		return repository.save(demoObject);
+		return service.create(demoObject);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<DemoObject> updateDemoObject(@RequestBody DemoObject demoObject) {
 		LOGGER.debug("updateDemoObject");
-		return new ResponseEntity<DemoObject>(repository.save(demoObject), HttpStatus.OK);
+		return new ResponseEntity<DemoObject>(service.update(demoObject), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteDemoObject(@PathVariable long id) {
-		repository.deleteById(id);
+		service.delete(id);
 	}
 	
 	
